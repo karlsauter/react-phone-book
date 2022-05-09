@@ -34,37 +34,31 @@ const style = {
 };
 
 function PhoneBookForm({addEntryToPhoneBook}) {
-    const [userFirstname, setUserFirstname] = React.useState('')
-    const [userLastname, setUserLastname] = React.useState('')
-    const [userPhone, setUserPhone] = React.useState('')
+    const [contact, setContact] = React.useState({
+        userFirstname: '',
+        userLastname: '',
+        userPhone: '',
+    })
 
-    const handleFirstnameChange = (e) => {
-        setUserFirstname(e.target.value)
-    }
-    
-    const handleLastnameChange = (e) => {
-        setUserLastname(e.target.value)
-    }
-
-    const handlePhoneChange = (e) => {
-        setUserPhone(e.target.value)
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setContact(contact => {
+            return { ...contact, [name]: value }
+        })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const contact = {
-            userFirstname: userFirstname,
-            userLastname: userLastname,
-            userPhone: userPhone
-        }
-        resetForm()
         addEntryToPhoneBook(contact)
+        resetForm()
     }
 
     const resetForm = () => {
-        setUserFirstname('')
-        setUserLastname('')
-        setUserPhone('')
+        setContact({
+            userFirstname: '',
+            userLastname: '',
+            userPhone: '',    
+        })
     }
     
     return (
@@ -76,8 +70,8 @@ function PhoneBookForm({addEntryToPhoneBook}) {
                 className="userFirstname"
                 name="userFirstname"
                 type="text"
-                value={userFirstname}
-                onChange={handleFirstnameChange}
+                value={contact.userFirstname}
+                onChange={handleChange}
                 placeholder="Coder"
             />
             <br />
@@ -88,8 +82,8 @@ function PhoneBookForm({addEntryToPhoneBook}) {
                 className="userLastname"
                 name="userLastname"
                 type="text"
-                value={userLastname}
-                onChange={handleLastnameChange}
+                value={contact.userLastname}
+                onChange={handleChange}
                 placeholder="Byte"
             />
             <br />
@@ -100,8 +94,8 @@ function PhoneBookForm({addEntryToPhoneBook}) {
                 className="userPhone"
                 name="userPhone"
                 type="text" 
-                value={userPhone}
-                onChange={handlePhoneChange}
+                value={contact.userPhone}
+                onChange={handleChange}
                 placeholder="12345"
             />
             <br />
